@@ -1320,29 +1320,31 @@
 
 
 	function _dispatchEvent(sortable, rootEl, name, targetEl, toEl, fromEl, startIndex, newIndex, originalEvt) {
-		sortable = (sortable || rootEl[expando]);
+    try {
+      sortable = (sortable || rootEl[expando]);
 
-		var evt = document.createEvent('Event'),
-			options = sortable.options,
-			onName = 'on' + name.charAt(0).toUpperCase() + name.substr(1);
+      var evt = document.createEvent('Event'),
+        options = sortable.options,
+        onName = 'on' + name.charAt(0).toUpperCase() + name.substr(1);
 
-		evt.initEvent(name, true, true);
+      evt.initEvent(name, true, true);
 
-		evt.to = toEl || rootEl;
-		evt.from = fromEl || rootEl;
-		evt.item = targetEl || rootEl;
-		evt.clone = cloneEl;
+      evt.to = toEl || rootEl;
+      evt.from = fromEl || rootEl;
+      evt.item = targetEl || rootEl;
+      evt.clone = cloneEl;
 
-		evt.oldIndex = startIndex;
-		evt.newIndex = newIndex;
+      evt.oldIndex = startIndex;
+      evt.newIndex = newIndex;
 
-		evt.originalEvent = originalEvt;
+      evt.originalEvent = originalEvt;
 
-		rootEl.dispatchEvent(evt);
+      rootEl.dispatchEvent(evt);
 
-		if (options[onName]) {
-			options[onName].call(sortable, evt);
-		}
+      if (options[onName]) {
+        options[onName].call(sortable, evt);
+      }
+    } catch (e) {}
 	}
 
 
